@@ -1,0 +1,120 @@
+@font-face {
+    font-family: OpenSansLight;
+    src: url(../fonts/OpenSans-Light.ttf);
+}
+
+@font-face {
+    font-family: OpenSansRegular;
+    src: url(../fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: OpenSansSemiBold;
+    src: url(../fonts/OpenSans-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(../fonts/WhitneyHTF-Bold.otf);
+}
+
+@font-face {
+    font-family: WhitneyMedium;
+    src: url(../fonts/WhitneyHTF-Medium.otf);
+}
+
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../fonts/HelveticaNeue-Roman.otf);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-family: OpenSansRegular, sans-serif;
+}
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    background: #2C2F33;
+}
+
+.box {
+    background: #23272A;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-flow: column;
+    border-radius: 3px;
+}
+
+h1 {
+    font-family: WhitneyMedium, HelveticaNeue, Arial, sans-serif;
+    font-size: 40px;
+    margin: 15px;
+}
+
+b {
+    font-family: Whitney, HelveticaNeue, Arial, sans-serif;
+}
+
+p {
+    font-size: 15px;
+    margin: 25px;
+    filter: brightness(70%);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    padding: 20px;
+    background: grey;
+    width: 70%;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin: 10px;
+}
+
+.success {
+    background: #49b756;
+    border: 3px solid #49b756;
+}
+
+.success-text {
+    color: #49b756;
+}
+
+.error-text {
+    color: #F86754;
+}
+
+.discord {
+    background: #7289DA;
+    border: 3px solid #7289DA;
+}
+
+.patreon {
+    background: #F86754;
+    border: 3px solid #F86754;
+}
+
+.discord-activated {
+    background: transparent;
+}
+
+.patreon-activated {
+    background: transparent;
+}
+
+i {
+    margin-right: 8px;
+}

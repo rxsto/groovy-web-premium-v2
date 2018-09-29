@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> Groovy Premium </title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/logo.png') }}">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="box">
+                <h1><b>Groovy</b> Premium</h1>
+                <p>{% if session['user_id'] and session['patreon_oauth2_token'] %}You successfully linked your accounts! Enjoy your new features!{% else %}To get Groovy Premium connect your Discord and Patreon account.{% endif %}</p>
+                <a href="{% if session['user_id'] %}/{% else %}{{ url_for('discord_login') }}{% endif %}" class="discord {% if session['user_id'] %}discord-activated{% endif %}">
+                    {% if session['user_id'] %}
+                        <i class="fas fa-check-square"></i>
+                    {% else %}
+                        <i class="fab fa-discord"></i>
+                    {% endif %}
+                    Discord
+                </a>
+                <a href="{% if session['patreon_oauth2_token'] %}/{% else %}{{ url_for('patreon') }}{% endif %}" class="patreon {% if session['patreon_oauth2_token'] %}patreon-activated{% endif %}">
+                    {% if session['patreon_oauth2_token'] %}
+                        <i class="fas fa-check-square"></i>
+                    {% else %}
+                        <i class="fab fa-patreon"></i>
+                    {% endif %}
+                    Patreon
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
