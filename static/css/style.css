@@ -1,0 +1,94 @@
+@font-face { font-family: OpenSansLight; src: url(../fonts/OpenSans-Light.ttf); }
+@font-face { font-family: OpenSansRegular; src: url(../fonts/OpenSans-Regular.ttf); }
+@font-face { font-family: OpenSansSemiBold; src: url(../fonts/OpenSans-SemiBold.ttf); }
+
+html, body {
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-family: OpenSansRegular;
+}
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    background: #2C2F33;
+}
+
+.box {
+    background: #23272A;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-flow: column;
+    border-radius: 3px;
+}
+
+h1 {
+    font-family: OpenSansRegular;
+    font-size: 45px;
+    margin: 15px;
+}
+
+b {
+    font-family: OpenSansSemiBold;
+}
+
+p {
+    font-family: OpenSansLight;
+    font-size: 15px;
+    margin: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    padding: 20px;
+    background: grey;
+    width: 70%;
+    text-align: center;
+    font-size: 17.5px;
+    letter-spacing: 1px;
+    margin: 10px;
+}
+
+.success {
+    background: #49b756;
+    border: 3px solid #49b756;
+}
+
+.success-text {
+    color: #49b756;
+}
+
+.error-text {
+    color: #F86754;
+}
+
+.discord {
+    background: #7289DA;
+    border: 3px solid #7289DA;
+}
+
+.patreon {
+    background: #F86754;
+    border: 3px solid #F86754;
+}
+
+.discord-activated {
+    background: transparent;
+}
+
+.patreon-activated {
+    background: transparent;
+}
+
+i {
+    margin-right: 7.5px;
+}
