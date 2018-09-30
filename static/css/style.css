@@ -1,12 +1,43 @@
-@font-face { font-family: OpenSansLight; src: url(../fonts/OpenSans-Light.ttf); }
-@font-face { font-family: OpenSansRegular; src: url(../fonts/OpenSans-Regular.ttf); }
-@font-face { font-family: OpenSansSemiBold; src: url(../fonts/OpenSans-SemiBold.ttf); }
+@font-face {
+    font-family: OpenSansLight;
+    src: url(../fonts/OpenSans-Light.ttf);
+}
+
+@font-face {
+    font-family: OpenSansRegular;
+    src: url(../fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: OpenSansSemiBold;
+    src: url(../fonts/OpenSans-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../fonts/HelveticaNeue-Roman.otf);
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(../fonts/WhitneyHTF-Bold.otf);
+}
+
+@font-face {
+    font-family: WhitneyLight;
+    src: url(../fonts/WhitneyHTF-Light.otf);
+}
+
+@font-face {
+    font-family: WhitneyMedium;
+    src: url(../fonts/WhitneyHTF-Light.otf);
+}
 
 html, body {
     height: 100%;
     width: 100%;
     color: white;
-    font-family: OpenSansRegular;
+    font-family: OpenSansRegular, sans-serif;
 }
 
 .wrapper {
@@ -27,21 +58,23 @@ html, body {
     align-content: center;
     justify-content: center;
     flex-flow: column;
-    border-radius: 3px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 h1 {
-    font-family: OpenSansRegular;
-    font-size: 45px;
-    margin: 15px;
+    font-family: Whitney, HelveticaNeue, Arial, sans-serif;
+    font-size: 40px;
+    margin: 25px;
+    animation: float-without-shadow 3s ease-in-out infinite;
 }
 
 b {
-    font-family: OpenSansSemiBold;
+    font-family: OpenSansSemiBold, sans-serif;
 }
 
 p {
-    font-family: OpenSansLight;
+    font-family: OpenSansLight, sans-serif;
     font-size: 15px;
     margin: 15px;
 }
@@ -53,9 +86,16 @@ a {
     background: grey;
     width: 70%;
     text-align: center;
-    font-size: 17.5px;
+    font-size: 18px;
     letter-spacing: 1px;
     margin: 10px;
+}
+
+hr {
+    width: 90%;
+    height: 1px;
+    background: #2C2F33;
+    color: #2C2F33;
 }
 
 .success {
@@ -74,11 +114,13 @@ a {
 .discord {
     background: #7289DA;
     border: 3px solid #7289DA;
+    border-radius: 2px;
 }
 
 .patreon {
     background: #F86754;
     border: 3px solid #F86754;
+    border-radius: 2px;
 }
 
 .discord-activated {
@@ -90,5 +132,17 @@ a {
 }
 
 i {
-    margin-right: 7.5px;
+    margin-right: 8px;
+}
+
+@keyframes float-without-shadow {
+    0% {
+        transform: translatey(0px);
+    }
+    50% {
+        transform: translatey(-5px);
+    }
+    100% {
+        transform: translatey(0px);
+    }
 }

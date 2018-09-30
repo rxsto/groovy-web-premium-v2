@@ -154,9 +154,9 @@ def patreon_callback():
 
     if pledge is not None:
         if pledge['attributes']['declined_since'] is None:
-            if pledge['attributes']['amount_cents'] == 100:
+            if 100 <= pledge['attributes']['amount_cents'] <= 499:
                 session['pledge'] = 1
-            elif pledge['attributes']['amount_cents'] == 500:
+            elif 500 <= pledge['attributes']['amount_cents']:
                 session['pledge'] = 2
             return check_pledge()
     else:

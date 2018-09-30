@@ -14,6 +14,7 @@
             <div class="box">
                 <h1><b>Groovy</b> Premium</h1>
                 <p>{% if session['user_id'] and session['patreon_oauth2_token'] %}You successfully linked your accounts! Enjoy your new features!{% else %}To get Groovy Premium connect your Discord and Patreon account.{% endif %}</p>
+                <hr/>
                 <a href="{% if session['user_id'] %}/{% else %}{{ url_for('discord_login') }}{% endif %}" class="discord {% if session['user_id'] %}discord-activated{% endif %}">
                     {% if session['user_id'] %}
                         <i class="fas fa-check-square"></i>
