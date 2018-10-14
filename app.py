@@ -1,17 +1,14 @@
 import asyncio
 import os
 
-from token_check import TokenCheck
-import patreon as patreonlib
-from patreon.utils import user_agent_string
 import requests
-
-import config
-
-from flask import Flask, session, redirect, request, render_template
+from flask import Flask, redirect, render_template, request, session
+from patreon.utils import user_agent_string
 from requests_oauthlib import OAuth2Session
 
+import config
 from database import PostgreClient
+from token_check import TokenCheck
 
 postgre_client = PostgreClient(
     user=config.db_user, host=config.db_host, database=config.db_data, password=config.db_pass
@@ -21,6 +18,7 @@ loop = asyncio.new_event_loop()
 loop.run_until_complete(postgre_client.connect())
 
 check_token = TokenCheck(postgre_client.get_pool(), loop)
+check_token.run_renew()
 
 app = Flask(__name__)
 
@@ -102,12 +100,13 @@ def discord_login_callback():
 @app.route('/patreon')
 def patreon():
     patreon_auth = f'https://patreon.com/oauth2/authorize?response_type=code&client_id={config.patreon_id}&' \
-                   f'redirect_uri={config.patreon_redirect}'
+                   f'redirect_uri={config.patreon_redirect}&scope=identity campaigns campaigns.members'
     return redirect(patreon_auth)
 
 
 @app.route('/patreon/callback')
 def patreon_callback():
+    # Get TOKEN
     headers = {
         "User-Agent": user_agent_string(),
         "Content-Type": "application/x-www-form-urlencoded"
@@ -121,47 +120,53 @@ def patreon_callback():
         "redirect_uri": config.patreon_redirect
     }
 
-    r = requests.post(config.patreon_token_url, headers=headers, data=params)
+    token_request = requests.post("https://www.patreon.com/api/oauth2/token", headers=headers, data=params)
 
-    session['patreon_oauth2_token'] = r.json()['access_token']
-    session['patreon_refresh_token'] = r.json()['refresh_token']
+    session['access_token'] = token_request.json()['access_token']
+    session['refresh_token'] = token_request.json()['refresh_token']
 
-    api_client = patreonlib.API(session['patreon_oauth2_token'])
-    user_response = api_client.fetch_user()
-    user = user_response.data()
-
-    session['patreon_user_id'] = user.id()
-
-    pledges = user.relationship('pledges')
-    pledge = pledges[0] if pledges and len(pledges) > 0 else None
-
+    # Get USER via TOKEN
     headers = {
         "User-Agent": user_agent_string(),
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + session['access_token']
     }
 
-    params = {
-        "grant_type": "refresh_token",
-        "refresh_token": session['patreon_refresh_token'],
-        "client_id": config.patreon_id,
-        "client_secret": config.patreon_secret
-    }
+    user_request = requests.get("https://www.patreon.com/api/oauth2/v2/identity?include=memberships", headers=headers)
 
-    r = requests.post(config.patreon_token_url, headers=headers, data=params)
+    session['patreon_user_id'] = user_request.json()["data"]["id"]
 
-    session['access_token'] = r.json()['access_token']
-    session['refresh_token'] = r.json()['refresh_token']
-
-    if pledge is not None:
-        if pledge['attributes']['declined_since'] is None:
-            if 100 <= pledge['attributes']['amount_cents'] <= 499:
-                session['pledge'] = 1
-            elif 500 <= pledge['attributes']['amount_cents']:
-                session['pledge'] = 2
-            return check_pledge()
-    else:
-        del session['patreon_oauth2_token']
+    if len(user_request.json()["data"]["relationships"]["memberships"]["data"]) == 0:
+        del session['access_token']
         return redirect('/nopledge')
+
+    member_id = user_request.json()["data"]["relationships"]["memberships"]["data"][0]["id"]
+
+    # Get MEMBER via ID
+    headers = {
+        "User-Agent": user_agent_string(),
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Bearer " + session['access_token']
+    }
+
+    member_request = requests.get("https://www.patreon.com/api/oauth2/v2/members/" + member_id +
+                                  "?include=currently_entitled_tiers,campaign&fields%5Btier%5D=amount_cents",
+                                  headers=headers)
+
+    if member_request.json()["data"]["relationships"]["campaign"]["data"]["id"] != "1646586":
+        del session['access_token']
+        return redirect('/nopledge')
+
+    if 100 <= member_request.json()["included"][1]["attributes"]["amount_cents"] <= 499:
+        session['pledge'] = 1
+
+    if member_request.json()["included"][1]["attributes"]["amount_cents"] >= 500:
+        session['pledge'] = 2
+
+    # Refresh TOKEN
+    refresh_token()
+
+    return check_pledge()
 
 
 def check_pledge():
@@ -169,7 +174,7 @@ def check_pledge():
             'refresh_token' in session and 'pledge' in session:
         loop.run_until_complete(
             set_entries(
-                session['access_token'], session['refresh_token'], session['user_id'], session['patreon_user_id'],
+                session['access_token'], session['refresh_token'], int(session['user_id']), session['patreon_user_id'],
                 session['pledge']
             )
         )
@@ -178,21 +183,21 @@ def check_pledge():
 
 
 @asyncio.coroutine
-async def set_entries(token, refresh_token, user_id, patreon_user_id, patreon_type):
+async def set_entries(token, patreon_refresh_token, user_id, patreon_user_id, patreon_type):
     async with postgre_client.get_pool().acquire() as connection:
         check = await connection.prepare(
             'SELECT * FROM premium WHERE user_id = $1'
         )
 
-        await check.fetchval(user_id)
+        value_check = await check.fetchval(user_id)
 
         check_abuse = await connection.prepare(
             'SELECT * FROM premium WHERE patreon_id = $1'
         )
 
-        await check_abuse.fetchval(patreon_user_id)
+        value_check_abuse = await check_abuse.fetchval(patreon_user_id)
 
-        if check is None and check_abuse is None:
+        if value_check is None and value_check_abuse is None:
             statement = await connection.prepare(
                 'INSERT INTO premium (patreon_token, refresh_token, user_id, patreon_id, type) '
                 'VALUES ($1, $2, $3, $4, $5)'
@@ -210,7 +215,26 @@ async def set_entries(token, refresh_token, user_id, patreon_user_id, patreon_ty
                     'WHERE patreon_id = $4'
                 )
 
-        await statement.fetchval(token, refresh_token, int(user_id), patreon_user_id, patreon_type)
+        await statement.fetchval(token, patreon_refresh_token, user_id, patreon_user_id, patreon_type)
+
+
+def refresh_token():
+    headers = {
+        "User-Agent": user_agent_string(),
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    params = {
+        "grant_type": "refresh_token",
+        "refresh_token": session['refresh_token'],
+        "client_id": config.patreon_id,
+        "client_secret": config.patreon_secret
+    }
+
+    refresh_request = requests.post("https://www.patreon.com/api/oauth2/token", headers=headers, data=params)
+
+    session['access_token'] = refresh_request.json()['access_token']
+    session['refresh_token'] = refresh_request.json()['refresh_token']
 
 
 if __name__ == '__main__':

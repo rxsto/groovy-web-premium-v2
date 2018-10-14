@@ -91,13 +91,6 @@ a {
     margin: 10px;
 }
 
-hr {
-    width: 90%;
-    height: 1px;
-    background: #2C2F33;
-    color: #2C2F33;
-}
-
 .success {
     background: #49b756;
     border: 3px solid #49b756;
