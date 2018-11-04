@@ -1,0 +1,153 @@
+@font-face {
+    font-family: OpenSansLight;
+    src: url(../fonts/OpenSans-Light.ttf);
+}
+
+@font-face {
+    font-family: OpenSansRegular;
+    src: url(../fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: OpenSansSemiBold;
+    src: url(../fonts/OpenSans-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../fonts/HelveticaNeue-Roman.otf);
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(../fonts/WhitneyHTF-Bold.otf);
+}
+
+@font-face {
+    font-family: WhitneyLight;
+    src: url(../fonts/WhitneyHTF-Light.otf);
+}
+
+@font-face {
+    font-family: WhitneyMedium;
+    src: url(../fonts/WhitneyHTF-Light.otf);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-family: OpenSansRegular, sans-serif;
+}
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    background: #2C2F33;
+}
+
+.box {
+    background: #23272A;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-flow: column;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+h1 {
+    font-family: Whitney, HelveticaNeue, Arial, sans-serif;
+    font-size: 40px;
+    margin: 25px;
+    animation: float-without-shadow 3s ease-in-out infinite;
+}
+
+b {
+    font-family: OpenSansSemiBold, sans-serif;
+}
+
+p {
+    font-family: OpenSansLight, sans-serif;
+    font-size: 15px;
+    margin: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    padding: 20px;
+    background: grey;
+    width: 70%;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin: 10px;
+}
+
+.success {
+    background: #49b756;
+    border: 3px solid #49b756;
+}
+
+.success-text {
+    color: #49b756;
+}
+
+.error-text {
+    color: #F86754;
+}
+
+.discord {
+    background: #7289DA;
+    border: 3px solid #7289DA;
+    border-radius: 2px;
+}
+
+.patreon {
+    background: #F86754;
+    border: 3px solid #F86754;
+    border-radius: 2px;
+}
+
+.discord-activated {
+    background: transparent;
+}
+
+.patreon-activated {
+    background: transparent;
+}
+
+i {
+    margin-right: 8px;
+}
+
+@keyframes float-without-shadow {
+    0% {
+        transform: translatey(0px);
+    }
+    50% {
+        transform: translatey(-5px);
+    }
+    100% {
+        transform: translatey(0px);
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .wrapper {
+        display: block;
+    }
+
+    .box {
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+}

@@ -1,36 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title> Groovy Premium </title>
+<head>
+    <title> Groovy Premium </title>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/logo.png') }}">
-    </head>
-    <body>
-        <div class="wrapper">
-            <div class="box">
-                <h1><b>Groovy</b> Premium</h1>
-                <p>{% if session['user_id'] and session['access_token'] %}You successfully linked your accounts! Enjoy your new features!{% else %}To get Groovy Premium connect your Discord and Patreon account.{% endif %}</p>
-                <a href="{% if session['user_id'] %}/{% else %}{{ url_for('discord_login') }}{% endif %}" class="discord {% if session['user_id'] %}discord-activated{% endif %}">
-                    {% if session['user_id'] %}
-                        <i class="fas fa-check-square"></i>
-                    {% else %}
-                        <i class="fab fa-discord"></i>
-                    {% endif %}
-                    Discord
-                </a>
-                <a href="{% if session['access_token'] %}/{% else %}{{ url_for('patreon') }}{% endif %}" class="patreon {% if session['access_token'] %}patreon-activated{% endif %}">
-                    {% if session['access_token'] %}
-                        <i class="fas fa-check-square"></i>
-                    {% else %}
-                        <i class="fab fa-patreon"></i>
-                    {% endif %}
-                    Patreon
-                </a>
-            </div>
-        </div>
-    </body>
+    <meta name="author" content="Rxsto">
+    <meta name="publisher" content="GroovyDevs">
+    <meta name="copyright" content="GroovyDevs">
+    <meta name="description"
+          content="Groovy is a feature-rich and experienced music-bot for Discord! He supports YouTube, Soundcloud, Spotify and more!">
+    <meta name="keywords"
+          content="groovy, groovybot, discord, discordbot, discord-bot, musicbot, music-bot, discord, bot, music, high quality, high, quality, rxsto, schlaubi">
+    <meta name="image" content="https://groovybot.gq/assets/img/groovy.png">
+    <meta name="robots" content="index, follow">
+
+    <meta itemprop="name" content="Groovy Premium">
+    <meta itemprop="description"
+          content="Groovy is a feature-rich and experienced music-bot for Discord! He supports YouTube, Soundcloud, Spotify and more!">
+    <meta itemprop="image" content="https://groovybot.gq/assets/img/groovy.png">
+
+    <meta name="og:title" content="Groovy - Activate Premium Perks">
+    <meta name="og:description"
+          content="Groovy is a feature-rich and experienced music-bot for Discord! He supports YouTube, Soundcloud, Spotify and more!">
+    <meta name="og:image" content="https://groovybot.gq/assets/img/groovy.png">
+    <meta name="og:url" content="https://groovybot.gq">
+    <meta property="og:keywords"
+          content="groovy, groovybot, discord, discordbot, discord-bot, musicbot, music-bot, discord, bot, music, high quality, high, quality, rxsto, schlaubi">
+    <meta name="og:site_name" content="Groovy">
+    <meta name="og:locale" content="en">
+    <meta name="og:type" content="website">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Groovy">
+    <meta name="twitter:description"
+          content="Groovy is a feature-rich and experienced music-bot for Discord! He supports YouTube, Soundcloud, Spotify and more!">
+    <meta name="twitter:site" content="@groovydevs">
+    <meta name="twitter:creator" content="@rxsto_official">
+
+    <link rel="icon" href="https://groovybot.gq/assets/img/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://groovybot.gq/assets/img/groovy.png">
+
+    <meta name="application-name" content="Groovy">
+    <meta name="theme-color" content="#7289DA">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/logo.png') }}">
+</head>
+<body>
+<div id="loading-bar" class="loading-bar animated fadeOut"></div>
+<div id="loader" class="loader animated fadeOutUp">
+    <img class="loader-img animated jackInTheBox" src="{{ url_for('static', filename='img/logo.png') }}">
+    <h2 class="animated fadeInUp">Groovy Premium</h2>
+</div>
+<div class="wrapper">
+    <h1>Groovy Premium</h1>
+    <p>{% if session['user_id'] and session['pledge'] %}You successfully linked your accounts! Enjoy your new
+        features!{% else %}To get Groovy Premium connect your Discord and Patreon account.{% endif %}</p>
+    <div>
+        <a href="{% if session['user_id'] %}/{% else %}{{ url_for('discord_login') }}{% endif %}"
+           class="button discord {% if session['user_id'] %}discord-activated{% endif %}">
+            {% if session['user_id'] %}
+                <i class="fas fa-check-square"></i>
+            {% else %}
+                <i class="fab fa-discord"></i>
+            {% endif %}
+            Discord
+        </a>
+        <a href="{% if session['pledge'] %}/{% else %}{{ url_for('patreon') }}{% endif %}"
+           class="button patreon {% if session['pledge'] %}patreon-activated{% endif %}">
+            {% if session['pledge'] %}
+                <i class="fas fa-check-square"></i>
+            {% else %}
+                <i class="fab fa-patreon"></i>
+            {% endif %}
+            Patreon
+        </a>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
 </html>

@@ -8,6 +8,8 @@ services:
     - "$PWD:/opt/groovy/premium"
     ports:
     - "8080:8080"
+    env_file:
+    - premium.env
     command: gunicorn -b 0.0.0.0:8080 app:app
 networks:
   backend:

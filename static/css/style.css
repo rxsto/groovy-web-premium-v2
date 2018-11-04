@@ -1,141 +1,171 @@
 @font-face {
-    font-family: OpenSansLight;
-    src: url(../fonts/OpenSans-Light.ttf);
+    font-family: ProductSansBold;
+    src: url('../fonts/Product Sans Bold.ttf');
 }
 
 @font-face {
-    font-family: OpenSansRegular;
-    src: url(../fonts/OpenSans-Regular.ttf);
+    font-family: ProductSans;
+    src: url('../fonts/Product Sans Regular.ttf');
 }
 
-@font-face {
-    font-family: OpenSansSemiBold;
-    src: url(../fonts/OpenSans-SemiBold.ttf);
-}
-
-@font-face {
-    font-family: HelveticaNeue;
-    src: url(../fonts/HelveticaNeue-Roman.otf);
-}
-
-@font-face {
-    font-family: Whitney;
-    src: url(../fonts/WhitneyHTF-Bold.otf);
-}
-
-@font-face {
-    font-family: WhitneyLight;
-    src: url(../fonts/WhitneyHTF-Light.otf);
-}
-
-@font-face {
-    font-family: WhitneyMedium;
-    src: url(../fonts/WhitneyHTF-Light.otf);
+:root {
+    --primary: #7289DA;
+    --darker: #23272A;
+    --light: #FFFFFF;
+    --dark: #2C2F33;
+    --patreon: #f96854;
+    --success: #49b756;
+    --error: #dd2525;
 }
 
 html, body {
     height: 100%;
     width: 100%;
-    color: white;
-    font-family: OpenSansRegular, sans-serif;
+    color: var(--light);
+    background: var(--dark);
+    font-family: ProductSans, sans-serif;
+}
+
+h1 {
+    font-family: ProductSansBold, sans-serif;
+    font-size: 50px;
+    border-bottom: 3px solid var(--light);
+    padding: 0 35px 15px 35px;
+}
+
+p {
+    font-size: 20px;
+    margin: 25px 0 25px 0;
+}
+
+a {
+    font-size: 20px;
+    color: var(--light);
+    text-decoration: none;
+}
+
+i {
+    font-size: 15px;
+    margin: 5px;
+}
+
+.loading-bar {
+    z-index: 2;
+    width: 0;
+    height: 5px;
+    position: absolute;
+    background: var(--primary);
+    animation-delay: 3s;
+    animation-duration: 1s;
+}
+
+.loader {
+    height: 100%;
+    width: 100%;
+    background: var(--darker);
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    animation-delay: 2s;
+    animation-duration: 2s;
+}
+
+.loader-img {
+    height: 100px;
+    margin: 25px;
+    animation-duration: 2s;
+}
+
+.loader h2 {
+    font-size: 55px;
+    font-family: ProductSansBold, sans-serif;
+    margin: 25px;
+    animation-duration: 2s;
+    text-align: center;
 }
 
 .wrapper {
     height: 100%;
     width: 100%;
     display: flex;
-    align-items: center;
     align-content: center;
+    align-items: center;
     justify-content: center;
-    background: #2C2F33;
+    flex-direction: column;
+    background-size: 80%;
+    background-clip: padding-box;
+    background: no-repeat center;
 }
 
-.box {
-    background: #23272A;
-    padding: 50px;
+.wrapper div {
     display: flex;
-    align-items: center;
     align-content: center;
+    align-items: center;
     justify-content: center;
-    flex-flow: column;
+    flex-direction: row;
+}
+
+.button {
+    padding: 17px 75px 17px 75px;
     border-radius: 4px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-h1 {
-    font-family: Whitney, HelveticaNeue, Arial, sans-serif;
-    font-size: 40px;
-    margin: 25px;
-    animation: float-without-shadow 3s ease-in-out infinite;
-}
-
-b {
-    font-family: OpenSansSemiBold, sans-serif;
-}
-
-p {
-    font-family: OpenSansLight, sans-serif;
-    font-size: 15px;
-    margin: 15px;
-}
-
-a {
-    text-decoration: none;
-    color: white;
-    padding: 20px;
-    background: grey;
-    width: 70%;
-    text-align: center;
-    font-size: 18px;
-    letter-spacing: 1px;
+    background: var(--darker);
     margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: .2s ease-in-out;
+    text-align: center;
 }
 
-.success {
-    background: #49b756;
-    border: 3px solid #49b756;
-}
-
-.success-text {
-    color: #49b756;
-}
-
-.error-text {
-    color: #F86754;
+.button:hover {
+    font-size: 22px;
 }
 
 .discord {
-    background: #7289DA;
-    border: 3px solid #7289DA;
-    border-radius: 2px;
+    background: var(--primary);
 }
 
 .patreon {
-    background: #F86754;
-    border: 3px solid #F86754;
-    border-radius: 2px;
+    background: var(--patreon);
 }
 
-.discord-activated {
-    background: transparent;
+.success {
+    background: var(--success);
 }
 
-.patreon-activated {
-    background: transparent;
+.success-text {
+    color: var(--success);
 }
 
-i {
-    margin-right: 8px;
+.error-text {
+    color: var(--error);
 }
 
-@keyframes float-without-shadow {
-    0% {
-        transform: translatey(0px);
+@media screen and (max-width: 800px) {
+    .loader h2 {
+        font-size: 45px;
     }
-    50% {
-        transform: translatey(-5px);
+
+    .wrapper div {
+        flex-direction: column;
     }
-    100% {
-        transform: translatey(0px);
+
+    .button {
+        width: 100%;
+    }
+
+    h1 {
+        padding: 0 0 20px 0;
+    }
+
+    p {
+        margin: 25px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .button {
+        padding: 17px 50px 17px 50px;
     }
 }
