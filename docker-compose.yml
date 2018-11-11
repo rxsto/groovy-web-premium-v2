@@ -2,14 +2,11 @@ version: '3'
 services:
   premium:
     build: .
-    networks:
-    - backend
     volumes:
     - "$PWD:/opt/groovy/premium"
     ports:
     - "8080:8080"
     env_file:
     - premium.env
+    restart: always
     command: gunicorn -b 0.0.0.0:8080 app:app
-networks:
-  backend:
