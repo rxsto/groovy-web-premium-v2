@@ -1,0 +1,34 @@
+@font-face {
+    font-family: ProductSans;
+    src: url('../fonts/Product Sans Regular.ttf');
+}
+
+@font-face {
+    font-family: ProductSansBold;
+    src: url('../fonts/Product Sans Bold.ttf');
+}
+
+@font-face {
+    font-family: OpenSansLight;
+    src: url('../fonts/OpenSans-Light.ttf');
+}
+
+@font-face {
+    font-family: UniSansHeavy;
+    src: url(../fonts/uni-sans.heavy-caps.otf);
+}
+
+@font-face {
+    font-family: UniSansLight;
+    src: url(../fonts/uni-sans.thin-caps.otf);
+}
+
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../fonts/HelveticaNeue-Roman.otf);
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(../fonts/WhitneyHTF-Bold.otf);
+}

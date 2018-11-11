@@ -50,41 +50,62 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/logo.png') }}">
 </head>
 <body>
-<div id="loading-bar" class="loading-bar animated fadeOut"></div>
-<div id="loader" class="loader animated fadeOutUp">
-    <img class="loader-img animated jackInTheBox" src="{{ url_for('static', filename='img/logo.png') }}">
-    <h2 class="animated fadeInUp">Groovy Premium</h2>
-</div>
+<nav>
+    <div>
+        <a href="https://groovybot.gq" class="logo">
+            <img src="{{ url_for('static', filename='img/logowhite.png') }}" alt="Logo">
+            <h1>Groovy</h1>
+        </a>
+    </div>
+    <div>
+        <div class="socials">
+            <a href="https://patreon.com/rxsto" target="_blank"><i class="fab fa-patreon"></i></a>
+            <a href="https://groovybot.gq/support" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://twitter.com/groovydevs" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://twitch.tv/groovydevs" target="_blank"><i class="fab fa-twitch"></i></a>
+        </div>
+    </div>
+</nav>
 <div class="wrapper">
     <h1>Groovy Premium</h1>
     <p>{% if session['user_id'] and session['pledge'] %}You successfully linked your accounts! Enjoy your new
         features!{% else %}To get Groovy Premium connect your Discord and Patreon account.{% endif %}</p>
     <div>
-        <a href="{% if session['user_id'] %}/{% else %}{{ url_for('discord_login') }}{% endif %}"
+        <a href="{% if session['user_id'] %}#{% else %}{{ url_for('discord_login') }}{% endif %}"
            class="button discord {% if session['user_id'] %}discord-activated{% endif %}">
             {% if session['user_id'] %}
                 <i class="fas fa-check-square"></i>
             {% else %}
                 <i class="fab fa-discord"></i>
             {% endif %}
-            Discord
+            {% if session['discord_username'] and session['discord_avatar'] %}
+                {{ session['discord_username'] }}
+                <img class="user-img" src="{{ session['discord_avatar'] }}">
+            {% else %}
+                Discord
+            {% endif %}
         </a>
-        <a href="{% if session['pledge'] %}/{% else %}{{ url_for('patreon') }}{% endif %}"
+        <a href="{% if session['pledge'] %}#{% else %}{{ url_for('patreon') }}{% endif %}"
            class="button patreon {% if session['pledge'] %}patreon-activated{% endif %}">
             {% if session['pledge'] %}
                 <i class="fas fa-check-square"></i>
             {% else %}
                 <i class="fab fa-patreon"></i>
             {% endif %}
-            Patreon
+            {% if session['patreon_username'] and session['patreon_avatar'] %}
+                {{ session['patreon_username'] }}
+                <img class="user-img" src="{{ session['patreon_avatar'] }}">
+            {% else %}
+                Patreon
+            {% endif %}
         </a>
     </div>
 </div>
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

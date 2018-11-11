@@ -50,11 +50,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/libs/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='img/logo.png') }}">
 </head>
 <body>
+<nav>
+    <div>
+        <a href="https://groovybot.gq" class="logo">
+            <img src="{{ url_for('static', filename='img/logowhite.png') }}" alt="Logo">
+            <h1>Groovy</h1>
+        </a>
+    </div>
+    <div>
+        <div class="socials">
+            <a href="https://patreon.com/rxsto" target="_blank"><i class="fab fa-patreon"></i></a>
+            <a href="https://groovybot.gq/support" target="_blank"><i class="fab fa-discord"></i></a>
+            <a href="https://twitter.com/groovydevs" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://twitch.tv/groovydevs" target="_blank"><i class="fab fa-twitch"></i></a>
+        </div>
+    </div>
+</nav>
 <div class="wrapper">
     <h1>Groovy Premium</h1>
     <p class="success-text">Success! Enjoy your new features!</p>

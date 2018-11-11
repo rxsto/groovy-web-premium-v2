@@ -135,6 +135,8 @@ def discord_login_callback():
 
     # Save UserID in Session
     session['user_id'] = user['id']
+    session['discord_username'] = user['username'] + "#" + user['discriminator']
+    session['discord_avatar'] = f'https://cdn.discordapp.com/avatars/{user["id"]}/{user["avatar"]}.png'
     return check_pledge()
 
 
@@ -172,7 +174,7 @@ def patreon_callback():
         "Authorization": "Bearer " + session['access_token']
     }
 
-    user_request = requests.get(config.patreon_api_base_url + "/oauth2/v2/identity?include=memberships",
+    user_request = requests.get(config.patreon_api_base_url + "/oauth2/v2/identity?include=memberships&fields%5Buser%5D=full_name,thumb_url",
                                 headers=headers)
 
     user = user_request.json()["data"]
@@ -180,7 +182,9 @@ def patreon_callback():
     if len(user["relationships"]["memberships"]["data"]) == 0:
         return redirect('/nopledge')
 
-    session['patreon_user_id'] = user_request.json()["data"]["id"]
+    session['patreon_user_id'] = user["id"]
+    session['patreon_username'] = user["attributes"]["full_name"]
+    session['patreon_avatar'] = user["attributes"]["thumb_url"]
 
     member_id = user["relationships"]["memberships"]["data"][0]["id"]
 
@@ -198,6 +202,9 @@ def patreon_callback():
     )
 
     member = member_request.json()["data"]
+
+    # TESTING
+    session['pledge'] = 1
 
     if member["attributes"]["last_charge_status"] == "Pending":
         return redirect("/pending")
